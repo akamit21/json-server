@@ -1,18 +1,25 @@
-# Deployment `JSON Server` to `Heroku`
+# Fake `JSON Server`
 
-> Instructions how to deploy the full fake REST API [json-server](https://github.com/typicode/json-server) to heroku. Should only be used in development purpose but can act as a simpler database for smaller applications.
+> If you want to use full fake REST API [json-server](https://github.com/typicode/json-server) that can be used in development purpose as a simpler database for smaller applications. You can use this repo for that.
 
-## Create your database
+## How to create your own fake REST API's using json server
 
-1 . Clone this repo to anywhere on your computer.
+1 . Clone this repo on your computer.
 
 ```bash
-git clone https://github.com/akamit21/json-server.git
+$ git clone https://github.com/akamit21/json-server.git
 ```
 
-2 . Change `db.json` to **your own content** according to the [`json-server example`](https://github.com/typicode/json-server#example) and then `commit` your changes to git.
+2 . Add your own content to `db.json` and then `commit` your changes to git.
 
-_this example will create `/posts` route , each resource will have `id`, `title` and `content`. `id` will auto increment!_
+_this example will create `/users` and `/posts` route , each resource will have their own data depending on what are adding o it. In the second example you can see that I have added {`id`, `name` and `email`} to users array and {`id`, `title` and `content`} to posts array. In both cases `id` will auto increment!_
+
+```json
+{
+  "users": [],
+  "posts": []
+}
+```
 
 ```json
 {
@@ -33,9 +40,11 @@ _this example will create `/posts` route , each resource will have `id`, `title`
 }
 ```
 
+> In both cases data's are dummy you can have data of your own choice.
+
 ---
 
-## Deploy to **Heroku**
+## Deploying it to **Heroku**
 
 Heroku is a free hosting service for hosting small projects. Easy setup and deploy from the command line via _git_.
 
@@ -43,7 +52,7 @@ Heroku is a free hosting service for hosting small projects. Easy setup and depl
 
 ### Install Heroku
 
-1 . [Create your database](#create-your-database)
+1 . [Create your server](https://github.com/akamit21/json-server.git)
 
 2 . Create an account on <br/>[https://heroku.com](https://heroku.com)
 
@@ -61,19 +70,25 @@ heroku login
 heroku create `project name`
 ```
 
-6 . Push your app to **Heroku** (you will see a wall of code)
+6 . Open your project folder by writing the following command in your terminal and follow the instructions on the command line:
+
+```bash
+cd `project name`
+```
+
+7 . Push your app to **Heroku** (you will see a wall of code)
 
 ```bash
 git push heroku master
 ```
 
-7 . Visit your newly create app by opening it via heroku:
+8 . Visit your newly create app by opening it via heroku:
 
 ```bash
 heroku open
 ```
 
-8 . For debugging if something went wrong:
+9 . For debugging if something went wrong:
 
 ```bash
 heroku logs --tail
@@ -81,20 +96,51 @@ heroku logs --tail
 
 ---
 
-#### How it works
+## Run it locally on your PC
 
 Heroku will look for a startup-script, this is by default `npm start` so make sure you have that in your `package.json` (assuming your script is called `server.js`):
 
+1 . Clone repository
+
+```bash
+$ git clone https://github.com/akamit21/json-server.git
+$ cd json-server
+```
+
+2 . Run `npm install` npm install will install all modules listed as dependencies in [package.json](package.json) file.
+
+```bash
+$ npm install
+```
+
+3 . Run `npm run start` It will run application in http://localhost:3000
+
+```bash
+$ npm run start
+$ npm run dev `if you want to use nodemon`
+```
+
 ```json
  "scripts": {
-    "start" : "node server.js"
+    "start" : "node server.js",
+    "dev" : "nodemon server.js"
  }
 ```
 
-You also have to make changes to the port, you can't hardcode a dev-port. But you can reference herokus port. So the code will have the following:
+4 . You also have to make changes to the port, you can't hardcode a dev-port.
 
 ```js
 const port = process.env.PORT || port_number;
 ```
 
 ---
+
+### Contribute
+
+Contributions are always welcome!
+
+#### Amit Kumar
+
+> **Twitter :** @Amitaldo
+
+> **Credit :** [Jesper Orb](https://github.com/jesperorb)
