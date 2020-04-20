@@ -1,68 +1,102 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Deployment `JSON Server` to `Heroku`
 
-## Available Scripts
+> Instructions how to deploy the full fake REST API [json-server](https://github.com/typicode/json-server) to heroku. Should only be used in development purpose but can act as a simpler database for smaller applications.
 
-In the project directory, you can run:
+<img src="https://raw.githubusercontent.com/typicode/json-server/master/src/server/public/images/json.png" align="right">
 
-### `npm start`
+## Create your database
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1 . Clone this repo to anywhere on your computer.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```bash
+git clone https://github.com/akamit21/json-server.git
+```
 
-### `npm test`
+2 . Change `db.json` to **your own content** according to the [`json-server example`](https://github.com/typicode/json-server#example) and then `commit` your changes to git.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+_this example will create `/posts` route , each resource will have `id`, `title` and `content`. `id` will auto increment!_
 
-### `npm run build`
+```json
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Full name!",
+      "email": "name@email.com"
+    }
+  ],
+  "posts": [
+    {
+      "id": 0,
+      "title": "First post!",
+      "content": "My first content!"
+    }
+  ]
+}
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Deploy to **Heroku**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Heroku is a free hosting service for hosting small projects. Easy setup and deploy from the command line via _git_.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Install Heroku
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1 . [Create your database](#create-your-database)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+2 . Create an account on <br/>[https://heroku.com](https://heroku.com)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+3 . Install the Heroku CLI on your computer: <br/>[https://devcenter.heroku.com/articles/heroku-cli](https://devcenter.heroku.com/articles/heroku-cli)
 
-## Learn More
+4 . Connect the Heroku CLI to your account by writing the following command in your terminal and follow the instructions on the command line:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+heroku login
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+5 . Then create a remote heroku project, kinda like creating a git repository on GitHub. This will create a project on Heroku with a random name. If you want to name your app you have to supply your own name like `heroku create project-name`:
 
-### Code Splitting
+```bash
+heroku create `project name`
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+6 . Push your app to **Heroku** (you will see a wall of code)
 
-### Analyzing the Bundle Size
+```bash
+git push heroku master
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+7 . Visit your newly create app by opening it via heroku:
 
-### Making a Progressive Web App
+```bash
+heroku open
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+8 . For debugging if something went wrong:
 
-### Advanced Configuration
+```bash
+heroku logs --tail
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+---
 
-### Deployment
+#### How it works
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+Heroku will look for a startup-script, this is by default `npm start` so make sure you have that in your `package.json` (assuming your script is called `server.js`):
 
-### `npm run build` fails to minify
+```json
+ "scripts": {
+    "start" : "node server.js"
+ }
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+You also have to make changes to the port, you can't hardcode a dev-port. But you can reference herokus port. So the code will have the following:
+
+```js
+const port = process.env.PORT || port_number;
+```
+
+---
