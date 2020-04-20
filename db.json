@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "name": "Amit Kumar Singh",
+      "email": "akamit21@outlook.com",
+      "password": "123456",
+      "phone": 9852940988,
+      "gender": "other",
+      "id": 1
+    }
+  ]
+}
