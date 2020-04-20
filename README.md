@@ -1,6 +1,6 @@
 # Fake `JSON Server`
 
-> If you want to use full fake REST API [json-server](https://github.com/typicode/json-server) that can be used in development purpose as a simpler database for smaller applications. You can use this repo for that.
+> If you want to use full fake NoSQL datebase using [json-server](https://github.com/typicode/json-server) that can be used in development purpose as a simpler database for smaller applications. You can use this repo for that.
 
 ## How to create your own fake REST API's using json server
 
